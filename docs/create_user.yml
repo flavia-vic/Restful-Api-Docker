@@ -1,0 +1,37 @@
+tags:
+  - Usuários
+summary: Criação de usuário
+description: Cria um novo usuário no sistema com email e senha.
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        email:
+          type: string
+          example: usuario@example.com
+        password:
+          type: string
+          example: senhaSegura123
+responses:
+  201:
+    description: Usuário criado com sucesso.
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        email:
+          type: string
+          example: usuario@example.com
+  400:
+    description: Já existe um usuário com o email informado.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Já existe um usuário cadastrado com o email usuario@example.com"

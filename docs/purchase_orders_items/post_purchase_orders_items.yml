@@ -1,0 +1,76 @@
+este endpoint cria um pedido dentro de uma ordem de compra
+---
+tags:
+  - Purchase Orders Items
+summary: Adiciona um novo item a uma ordem de compra existente.
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: integer
+    description: "ID da ordem de compra. Exemplo: 123"
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        description:
+          type: string
+          example: "Produto A"
+        price:
+          type: number
+          format: float
+          example: 20.50
+        quantity:
+          type: integer
+          example: 5
+  - name: Authorization
+    in: header
+    required: true
+    type: string
+    description: "Token JWT para autenticação. Exemplo: 'Bearer <seu_token>'"
+responses:
+  201:
+    description: Item criado com sucesso.
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+        purchase_order_id:
+          type: integer
+      examples:
+        application/json:
+          id: 3
+          description: "Produto A"
+          price: 20.50
+          quantity: 5
+          purchase_order_id: 123
+  400:
+    description: Erro ao criar item (por exemplo, quantidade excedida).
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      examples:
+        application/json:
+          message: "Você somente pode adicionar mais X itens"
+  401:
+    description: Token JWT não fornecido ou inválido.
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+      examples:
+        application/json:
+          msg: "Token não fornecido ou inválido."

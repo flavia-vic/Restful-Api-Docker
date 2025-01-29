@@ -1,0 +1,67 @@
+este endpoint retorna todos os items de uma ordem de compra
+---
+tags:
+  - Purchase Orders Items
+summary: Retorna os itens de uma ordem de compra específica.
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: integer
+    description: "ID da ordem de compra. Exemplo: 1"
+  - name: Authorization
+    in: header
+    required: true
+    type: string
+    description: "Token JWT para autenticação. Exemplo: 'Bearer <seu_token>'"
+responses:
+  200:
+    description: Lista de itens da ordem de compra retornada com sucesso.
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          description:
+            type: string
+          price:
+            type: number
+            format: float
+          quantity:
+            type: integer
+          purchase_order_id:
+            type: integer
+      examples:
+        application/json:
+          - id: 1
+            description: "Produto A"
+            price: 10.50
+            quantity: 2
+            purchase_order_id: 123
+          - id: 2
+            description: "Produto B"
+            price: 15.00
+            quantity: 5
+            purchase_order_id: 123
+  404:
+    description: Ordem de compra não encontrada.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      examples:
+        application/json:
+          message: "Pedido de id 123 não encontrado"
+  401:
+    description: Token JWT não fornecido ou inválido.
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+      examples:
+        application/json:
+          msg: "Token não fornecido ou inválido."

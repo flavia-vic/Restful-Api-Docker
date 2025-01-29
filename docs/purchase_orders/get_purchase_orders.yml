@@ -1,0 +1,43 @@
+Este endpoint retorna a lista de todas as ordens de compra registradas.
+---
+tags:
+  - Purchase Orders
+summary: Lista todas as ordens de compra.
+parameters:
+  - name: Authorization
+    in: header
+    required: true
+    type: string
+    description: "Token JWT para autenticação. Exemplo: 'Bearer <seu_token>'"
+responses:
+  200:
+    description: Lista de ordens de compra retornada com sucesso.
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          description:
+            type: string
+          quantity:
+            type: integer
+      examples:
+        application/json:
+          - id: 1
+            description: "Compra de materiais de escritório"
+            quantity: 100
+          - id: 2
+            description: "Compra de itens de limpeza"
+            quantity: 120
+  401:
+    description: Token JWT não fornecido ou inválido.
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+      examples:
+        application/json:
+          msg: "Token não fornecido ou inválido."

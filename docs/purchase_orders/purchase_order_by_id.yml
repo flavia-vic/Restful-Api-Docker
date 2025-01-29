@@ -1,0 +1,53 @@
+Este endpoint permite buscar uma ordem de compra pelo ID.
+---
+tags:
+  - Purchase Orders
+summary: Busca uma ordem de compra pelo ID.
+parameters:
+  - name: Authorization
+    in: header
+    required: true
+    type: string
+    description: "Token JWT para autenticação. Exemplo: 'Bearer <seu_token>'"
+  - name: id
+    in: path
+    required: true
+    type: integer
+    description: ID da ordem de compra.
+responses:
+  200:
+    description: Ordem de compra encontrada.
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        quantity:
+          type: integer
+      examples:
+        application/json:
+          id: 1
+          description: "Compra de materiais de escritório"
+          quantity: 100
+  404:
+    description: Ordem de compra não encontrada.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      examples:
+        application/json:
+          message: "Pedido de id 10 não encontrado."
+  401:
+    description: Token JWT não fornecido ou inválido.
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+      examples:
+        application/json:
+          msg: "Token não fornecido ou inválido."

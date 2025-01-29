@@ -1,0 +1,45 @@
+
+services:
+  mariadb:
+    image: mariadb:latest
+    platform: linux/amd64  # Substitua por sua arquitetura, se necessário
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-flask-api-restful}
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-123456}
+    ports:
+      - "3306:3306" 
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Se necessário, especifique o caminho do Dockerfile
+    platform: linux/amd64  # Substitua por sua arquitetura
+    container_name: flask-api-restful
+    ports:
+      - "5000:5000"  # Porta em que o Flask será acessado no host
+    volumes:
+      - .:/app  # Monta o código-fonte do seu aplicativo no contêiner
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - DATABASE_URL=${DATABASE_URL:-mysql+pymysql://root:123456@mariadb:3306/flask-api-restful}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-pHT/jLZ++NVcDr9e88oPD9Jq/dKHAfsf}
+
+      
+    networks:
+      - app-network
+    depends_on:
+      - mariadb
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:

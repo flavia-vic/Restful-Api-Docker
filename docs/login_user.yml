@@ -1,0 +1,40 @@
+tags:
+  - Authentication
+summary: Este endpoint permite que o usuário faça login com seu email e senha, gerando um token JWT para autenticação em requisições subsequentes.
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: "admin@gmail.com"
+        password:
+          type: string
+          example: "admin123456"
+responses:
+  200:
+    description: Token gerado com sucesso
+    schema:
+      type: object
+      properties:
+        token:
+          type: string
+    examples:
+      application/json:
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluIiwiaWF0IjoxNjg4Mjg1NjM2fQ.JhXocAAm3yEr9h6F0qX8CG7l2n9XDo1LBK3Gfj9Z9oI"
+  401:
+    description: Usuário ou senha incorretos
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+    examples:
+      application/json:
+        msg: "Usuário ou senha incorretos"
