@@ -66,4 +66,3 @@ Este projeto foi baseado no curso **crie apis rest com python e flask** do profe
 ---
 
 💡 **Sinta-se à vontade para contribuir ou sugerir melhorias!** 🚀
->>>>>>> a215960 (Primeiro commit: adicionando API RESTful containerizada com Docker)
